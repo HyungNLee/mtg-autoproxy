@@ -78,7 +78,8 @@ fileOut.close();
       app.system("/usr/local/bin/python3 " + filePath + "/scripts/get_card_info.py \"" + cardName + "\" >> " + filePath + "/scripts/debug.log 2>&1");
     }
 
-    var cardJSONFile = new File(filePath + "/scripts/card.json");
+    var cardNameWithoutQuotes = cardName.replace(/["]+/g, '');
+    var cardJSONFile = new File(filePath + "/scripts/cardinfo/" + cardNameWithoutQuotes + ".json");
     cardJSONFile.open('r');
     var cardJSON = cardJSONFile.read();
     cardJSONFile.close();

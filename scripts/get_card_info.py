@@ -3,7 +3,8 @@ import sys
 import scrython
 import json
 import requests
-
+import os.path
+from os import path
 
 def get_dict(card):
     # As per Scryfall documentation, insert a delay between each request
@@ -115,13 +116,18 @@ def get_dict_pw(card):
 def save_json(card_json):
     json_dump = json.dumps(card_json)
     print(card_json)
-    with open(sys.path[0] + "/card.json", 'w') as f:
+    with open(sys.path[0] + "/cardinfo/" + card_json["name"] + ".json", 'w') as f:
         json.dump(json_dump, f)
 
 
 if __name__ == "__main__":
 
     cardname = sys.argv[1]
+    print("Checking if " + cardname + ".json already exists...")
+    if path.exists(sys.path[0] + "/cardinfo/" + cardname + ".json"):
+        print(cardname + ".json already exists!")
+        sys.exit()
+
     print("Asking Scryfall for information for: " + cardname)
     # Use Scryfall to search for this card
     time.sleep(0.05)
