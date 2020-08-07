@@ -3,7 +3,8 @@
 boxtopper = "";
 
 function proxy(file, ye) {
-  var expansionSymbol = ""; // Cube
+  // var expansionSymbol = ""; // Cube
+  var expansionSymbol = ""; // Cube
   var filePath = File($.fileName).parent.parent.fsName;
   $.evalFile(filePath + "/scripts/json2.js");
 
@@ -26,6 +27,10 @@ function proxy(file, ye) {
     cardName = fullCardName.slice(0, openIndex);
   }
 
+  // TESTING
+  var folderName = "~/Desktop/"
+  var fileOut = new File(folderName+"proxylog.txt");
+  // END TESTING
 
   if (cardName == "Plains" || cardName == "Island" || cardName == "Swamp" || cardName == "Mountain" || cardName == "Forest") {
     proxyBasic(cardName, cardArtist, ye);
@@ -34,9 +39,40 @@ function proxy(file, ye) {
     // Execute this with different commands, depending on operating system
     // Assumes users are only using either Windows or macOS
     // Thanks to jamesthe500 on stackoverflow for the OS-detecting code
+
+    // Original
+    // if ($.os.search(/windows/i) != -1) {
+    //   // Windows
+    //   app.system("python get_card_info.py \"" + cardName + "\"");
+    // } else {
+    //   // macOS
+    //   app.system("/usr/local/bin/python3 " + filePath + "/scripts/get_card_info.py \"" + cardName + "\" >> " + filePath + "/scripts/debug.log 2>&1");
+    // }
+
+    // LOGGING
+if (!fileOut.exists) {
+  fileOut.open("w");
+fileOut.writeln("start " + filePath + "/scripts/get_card_info.bat \"" + cardName + "\"");
+} else {
+  fileOut.open("a");
+fileOut.writeln("start " + filePath + "/scripts/get_card_info.bat \"" + cardName + "\"");
+}
+
+// stop writing to the file
+fileOut.close();
+// END LOGGING
+
+
+    // Modified
     if ($.os.search(/windows/i) != -1) {
       // Windows
-      app.system("python get_card_info.py \"" + cardName + "\"");
+      // app.system("python " + filePath + "/scripts/get_card_info.py \"" + cardName + "\" >> " + filePath + "/scripts/debug.log 2>&1");
+      // app.system("start " + filePath + "/scripts/get_card_info.bat \"" + cardName + "\"");
+      $.setenv("CARD_NAME", cardName);
+      File(filePath + "/scripts/get_card_info.bat").execute();
+      $.sleep(3000);
+      // app.system("py get_card_info.py \"" + cardName + "\" >> " + filePath + "/scripts/debug.log 2>&1");
+
     } else {
       // macOS
       app.system("/usr/local/bin/python3 " + filePath + "/scripts/get_card_info.py \"" + cardName + "\" >> " + filePath + "/scripts/debug.log 2>&1");
