@@ -32,13 +32,19 @@ function proxy(file, ye) {
     // Thanks to jamesthe500 on stackoverflow for the OS-detecting code
     if ($.os.search(/windows/i) != -1) {
       // Windows
-      app.system("python get_card_info.py \"" + cardName + "\"");
+      // app.system("python get_card_info.py \"" + cardName + "\"");
+
+      $.setenv("CARD_NAME", cardName);
+      File(filePath + "/scripts/get_card_info.bat").execute();
+      $.sleep(3000);
     } else {
       // macOS
       app.system("/usr/local/bin/python3 " + filePath + "/scripts/get_card_info.py \"" + cardName + "\" >> " + filePath + "/scripts/debug.log 2>&1");
     }
 
-    var cardJSONFile = new File(filePath + "/scripts/card.json");
+    var cardNameWithoutQuotes = cardName.replace(/["]+/g, '');
+    var cardJSONFile = new File(filePath + "/scripts/cardinfo/" + cardNameWithoutQuotes + ".json");
+    // var cardJSONFile = new File(filePath + "/scripts/card.json");
     cardJSONFile.open('r');
     var cardJSON = cardJSONFile.read();
     cardJSONFile.close();
