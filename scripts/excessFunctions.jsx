@@ -263,7 +263,7 @@ function verticallyFixText(textLayer) {
 function gradient(textAndIcons, rarity) {
   // Select the stroke colour
   var strokeColour = 0.000000;
-  var strokeWidth = 6.000000;
+  var strokeWidth = 3.000000;
   var symbolLayer = textAndIcons.layers.getByName("Expansion Symbol");
 
   if (rarity == "uncommon" | rarity == "rare" || rarity == "mythic") {
