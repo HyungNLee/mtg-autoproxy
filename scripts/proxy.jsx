@@ -4,7 +4,10 @@ boxtopper = "";
 
 function proxy(file, ye) {
   // var expansionSymbol = ""; // Cube
-  var expansionSymbol = ""; // Cube
+  var expansionSymbol = ""; // Leaf
+  // var expansionSymbol = ""; // Promo
+  // var expansionSymbol = ""; // Deck
+  // var expansionSymbol = ""; // Sorcerer's Apprentice
   var filePath = File($.fileName).parent.parent.fsName;
   $.evalFile(filePath + "/scripts/json2.js");
 
@@ -27,11 +30,6 @@ function proxy(file, ye) {
     cardName = fullCardName.slice(0, openIndex);
   }
 
-  // TESTING
-  var folderName = "~/Desktop/"
-  var fileOut = new File(folderName+"proxylog.txt");
-  // END TESTING
-
   if (cardName == "Plains" || cardName == "Island" || cardName == "Swamp" || cardName == "Mountain" || cardName == "Forest") {
     proxyBasic(cardName, cardArtist, ye);
   } else {
@@ -48,20 +46,6 @@ function proxy(file, ye) {
     //   // macOS
     //   app.system("/usr/local/bin/python3 " + filePath + "/scripts/get_card_info.py \"" + cardName + "\" >> " + filePath + "/scripts/debug.log 2>&1");
     // }
-
-    // LOGGING
-if (!fileOut.exists) {
-  fileOut.open("w");
-fileOut.writeln("start " + filePath + "/scripts/get_card_info.bat \"" + cardName + "\"");
-} else {
-  fileOut.open("a");
-fileOut.writeln("start " + filePath + "/scripts/get_card_info.bat \"" + cardName + "\"");
-}
-
-// stop writing to the file
-fileOut.close();
-// END LOGGING
-
 
     // Modified
     if ($.os.search(/windows/i) != -1) {
